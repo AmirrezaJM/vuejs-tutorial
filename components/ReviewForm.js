@@ -1,14 +1,16 @@
 app.component('review-form', {
-    template:
+  template:
     /*html*/
-    `<form class="review-form" @submit.prevent="onSubmit">
+    `
+    <form class="review-form" @submit.prevent="onSubmit">
       <h3>Leave a review</h3>
+
       <label for="name">Name:</label>
       <input id="name" v-model="name">
-  
+    
       <label for="review">Review:</label>      
-      <textarea id="review" v-model="review"></textarea>
-  
+      <textarea id="review" v-model="text"></textarea>
+
       <label for="rating">Rating:</label>
       <select id="rating" v-model.number="rating">
         <option>5</option>
@@ -18,48 +20,33 @@ app.component('review-form', {
         <option>1</option>
       </select>
   
-      <!-- solution -->
-      <label for="recommend">Would you recommend this product?</label>
-      <select id="recommend" v-model="recommend">
-        <option>Yes</option>
-        <option>No</option>
-      </select>
-      <!-- solution -->   
-  
       <input class="button" type="submit" value="Submit">  
-  
-    </form>`,
-    data() {
-      return {
-        name: '',
-        review: '',
-        rating: null,
-        // solution
-        recommend: null
-        // solution
-      }
-    },
-    methods: {
-      onSubmit() {
-        if (this.name === '' || this.review === '' || this.rating === null || this.recommend === null) {
-          alert('Review is incomplete. Please fill out every field.')
-          return
-        }
-  
-        let productReview = {
-          name: this.name,
-          review: this.review,
-          rating: this.rating,
-          recommend: this.recommend // solution
-  
-        }
-        this.$emit('review-submitted', productReview)
-  
-        this.name = ''
-        this.review = ''
-        this.rating = null
-        this.recommend = null // solution
-  
-      }
+    
+    </form>
+  `,
+  data() {
+    return {
+      name: '',
+      text: '',
+      rating: null
     }
-  })
+  },
+  methods: {
+    onSubmit() {
+      if (this.name === '' || this.text === '' || this.rating === null) {
+        alert('Review is incomplete. Please fill out every field.')
+        return
+      }
+
+      const review = {
+        name: this.name,
+        text: this.text,
+        rating: this.rating
+      }
+      this.$emit('review-submitted', review)
+      this.name = ''
+      this.text = ''
+      this.rating = null
+    }
+  }
+})
